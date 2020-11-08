@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PopularMoviesV1</string>
+    <string name="main_error">Error while loading the movie list! Please refresh.</string>
+    <string name="cover_image_content_description">This is the cover image of the movie.</string>
+</resources>
