@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_recycle);
 
 
-
+        //TODO Add RecyclerView structure with adapter and everything
+        //TODO Add menu item to change order of sorting
     }
 }
