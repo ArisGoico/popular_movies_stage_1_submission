@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_detail_image"
-                android:contentDescription="@string/cover_image_content_description" />
+                android:contentDescription="@string/detail_image_description" />
 
             <TextView
                 android:layout_width="wrap_content"

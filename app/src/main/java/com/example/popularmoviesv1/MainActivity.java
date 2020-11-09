@@ -1,11 +1,16 @@
 package com.example.popularmoviesv1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +33,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         //TODO Add RecyclerView structure with adapter and everything
-        //TODO Add menu item to change order of sorting
+    }
+
+
+    //----------
+    //---MENU---
+    //----------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_change_sorting) {
+            //TODO Change sorting
+            Toast.makeText(MainActivity.this, "Menu item clicked.", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
