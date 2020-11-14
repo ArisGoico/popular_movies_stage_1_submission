@@ -1,6 +1,7 @@
 package com.example.popularmoviesv1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,24 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mPoster = (ImageView) itemView.findViewById(R.id.iv_item_movie_poster);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            //TODO launch the Activity of the detail
+            Context context = v.getContext();
+            //DONE launch the Activity of the detail
+            Intent intent = new Intent(context, DetailActivity.class);
+
+            //DONE Add the movie information and pass it as parameter of the intent
+            intent.putExtra("Title",mArrayMovies[position].title);
+            intent.putExtra("Synopsis",mArrayMovies[position].synopsis);
+            intent.putExtra("ReleaseDate",mArrayMovies[position].releaseDate);
+            intent.putExtra("Score",mArrayMovies[position].score);
+            intent.putExtra("PosterUri",mArrayMovies[position].posterUri.toString());
+
+            context.startActivity(intent);
         }
     }
 

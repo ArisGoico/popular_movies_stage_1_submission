@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     //Constants
     private final int NUM_COLUMNS = 3;
 
-    //MovieDB URLs
+    //MovieDB API calls URLs
     private final String SCHEMA = "https";
     private final String MOVIEDB_BASE = "api.themoviedb.org/3/";
     private final String MOVIE_PATH = "movie";
@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private final String TOPRATED_PATH = "top_rated";
     private final String API_KEY_PARAM = "api_key";
     private final String API_KEY = "";
+
+    //MovieDB Image calls
+    private final String IMAGE_BASE = "image.tmdb.org/t/p/";
+    private final String IMAGE_SIZE = "w342";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +119,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_change_sorting) {
-            //TODO Change text on the button
+            //DONE Change text on the button
             if (orderPopular) {
                 downloadMoviePostersTopRated();
+                item.setTitle(R.string.main_menu_change_sorting_rated);
                 orderPopular = false;
             }
             else {
                 downloadMoviePostersPopular();
+                item.setTitle(R.string.main_menu_change_sorting_popular);
                 orderPopular = true;
             }
             return true;
@@ -141,6 +147,13 @@ public class MainActivity extends AppCompatActivity {
             Uri address = uris[0];
 
             //TODO parse the information from the JSON into the Movie[] structure
+
+            //DUMMY CONTENT TO TEST!
+            Movie[] movies = new Movie[3];
+            movies[0] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
+            movies[1] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
+            movies[2] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
+            return movies;
         }
 
         protected void onPostExecute(Movie[] result) {
