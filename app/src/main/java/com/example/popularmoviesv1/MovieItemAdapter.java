@@ -49,12 +49,15 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
     }
 
     //------CONSTRUCTOR------
-    public MovieItemAdapter(Movie[] inputMovies) {
-        mArrayMovies = inputMovies;
+    public MovieItemAdapter() {
     }
 
 
     //------FUNCTIONS------
+    public void setArrayMoviesData(Movie[] input){
+        mArrayMovies = input;
+        notifyDataSetChanged();
+    }
 
     //Method overrides for the adapter
     @Override
@@ -78,6 +81,7 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
 
     @Override
     public int getItemCount() {
+        if (mArrayMovies == null) return 0;
         return mArrayMovies.length;
     }
 }

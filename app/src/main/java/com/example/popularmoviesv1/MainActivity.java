@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.popularmoviesv1.Data.Movie;
+import com.example.popularmoviesv1.Utils.JsonNetworkUtils;
 
 import org.w3c.dom.Text;
 
 import java.net.URI;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mPbLoading;
     private RecyclerView mRecyclerView;
 
+    //Adapter
+    private MovieItemAdapter mAdapter;
+
+    //Internal variables
     private boolean orderPopular = true;
 
     //Constants
@@ -36,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     //MovieDB API calls URLs
     private final String SCHEMA = "https";
-    private final String MOVIEDB_BASE = "api.themoviedb.org/3/";
+    private final String MOVIEDB_BASE = "api.themoviedb.org";
+    private final String MOVIEDB_BASE_2 = "3";
     private final String MOVIE_PATH = "movie";
     private final String POPULAR_PATH = "popular";
     private final String TOPRATED_PATH = "top_rated";
@@ -57,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         mPbLoading = (ProgressBar) findViewById(R.id.pb_main_loading);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_recycle);
 
+        mAdapter = new MovieItemAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, NUM_COLUMNS));
+        mRecyclerView.setHasFixedSize(true);
+
         displayLoading();
 
         //DONE Fetch data from the web by creating an AsynctTask
@@ -69,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(SCHEMA)
             .authority(MOVIEDB_BASE)
+            .appendPath(MOVIEDB_BASE_2)
             .appendPath(MOVIE_PATH)
             .appendPath(POPULAR_PATH)
             .appendQueryParameter(API_KEY_PARAM, API_KEY);
@@ -80,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(SCHEMA)
                 .authority(MOVIEDB_BASE)
+                .appendPath(MOVIEDB_BASE_2)
                 .appendPath(MOVIE_PATH)
                 .appendPath(TOPRATED_PATH)
                 .appendQueryParameter(API_KEY_PARAM, API_KEY);
@@ -122,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
             //DONE Change text on the button
             if (orderPopular) {
                 downloadMoviePostersTopRated();
-                item.setTitle(R.string.main_menu_change_sorting_rated);
+                item.setTitle(R.string.main_menu_change_sorting_popular);
                 orderPopular = false;
             }
             else {
                 downloadMoviePostersPopular();
-                item.setTitle(R.string.main_menu_change_sorting_popular);
+                item.setTitle(R.string.main_menu_change_sorting_rated);
                 orderPopular = true;
             }
             return true;
@@ -138,31 +153,37 @@ public class MainActivity extends AppCompatActivity {
     //------ASYNCTASK------
     private class AsyncMoviesFetch extends AsyncTask<Uri, Void, Movie[]> {
         protected void onPreExecute() {
-            mRecyclerView.setAdapter(null);
+            super.onPreExecute();
             displayLoading();
         }
 
         protected Movie[] doInBackground(Uri... uris) {
-            //TODO fetch images using the uri
             Uri address = uris[0];
+            URL objective = JsonNetworkUtils.convertUriToURL(address);
+            Movie[] movies = null;
+            String jsonString;
+            if (objective != null) {
+                try {
+                    jsonString = JsonNetworkUtils.getResponseFromHttpUrl(objective);
+                }
+                catch (Exception e) {
+                    Log.e(this.getClass().toString(), "Unknown error while accessing the URL.");
+                    e.printStackTrace();
+                    return null;
+                }
+                movies = JsonNetworkUtils.parseMovieJson(jsonString);
+            }
 
-            //TODO parse the information from the JSON into the Movie[] structure
-
-            //DUMMY CONTENT TO TEST!
-            Movie[] movies = new Movie[3];
-            movies[0] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
-            movies[1] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
-            movies[2] = new Movie("Simbad", "Noice movie", "1986-01-29", "5//5", Uri.parse("https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg"));
             return movies;
         }
 
         protected void onPostExecute(Movie[] result) {
-            MovieItemAdapter adapter = new MovieItemAdapter(result);
-            adapter.notifyDataSetChanged();
-            mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, NUM_COLUMNS));
-            mRecyclerView.setHasFixedSize(true);
+            if (result == null) {
+                Log.w(this.getClass().toString(), "Movie array retrieved was empty after executing the AsyncTask.");
+                return;
+            }
             displayRecycleView();
+            mAdapter.setArrayMoviesData(result);
         }
     }
 }
