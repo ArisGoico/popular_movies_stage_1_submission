@@ -1,9 +1,9 @@
-package com.example.popularmoviesv1.Utils;
+package com.example.popularmoviesv1.utils;
 
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.popularmoviesv1.Data.Movie;
+import com.example.popularmoviesv1.data.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +27,7 @@ public class JsonNetworkUtils {
     private static final String IMAGE_SIZE = "w342";
 
     public static Movie[] parseMovieJson(String json) {
-        JSONObject fullJSON = null;
+        JSONObject fullJSON;
 
         String title;
         String synopsis;
@@ -50,7 +50,7 @@ public class JsonNetworkUtils {
                 score = tempMovie.getString("vote_average");
                 String posterPathString = tempMovie.getString("poster_path");
                 if (posterPathString.startsWith("/")) {
-                    posterPathString = posterPathString.substring(1, posterPathString.length());
+                    posterPathString = posterPathString.substring(1);
                 }
                 posterUri = buildImageUri(posterPathString);
                 movieArray[i] = new Movie(title,synopsis,releaseDate,score,posterUri);

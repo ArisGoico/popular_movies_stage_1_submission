@@ -8,21 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.popularmoviesv1.Data.Movie;
-import com.example.popularmoviesv1.Utils.JsonNetworkUtils;
+import com.example.popularmoviesv1.data.Movie;
+import com.example.popularmoviesv1.utils.JsonNetworkUtils;
 
-import org.w3c.dom.Text;
 
-import java.net.URI;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean orderPopular = true;
 
     //Constants
-    private final int NUM_COLUMNS = 3;
+    private final int NUM_COLUMNS = 2;
 
     //MovieDB API calls URLs
     private final String SCHEMA = "https";
@@ -51,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private final String API_KEY_PARAM = "api_key";
     private final String API_KEY = "";
 
-    //MovieDB Image calls
-    private final String IMAGE_BASE = "image.tmdb.org/t/p/";
-    private final String IMAGE_SIZE = "w342";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         displayLoading();
 
-        //DONE Fetch data from the web by creating an AsynctTask
         //Call method to launch the AsyncTask
         downloadMoviePostersPopular();
     }
@@ -167,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     jsonString = JsonNetworkUtils.getResponseFromHttpUrl(objective);
                 }
                 catch (Exception e) {
-                    Log.e(this.getClass().toString(), "Unknown error while accessing the URL.");
+                    displayError("Unknown error while accessing the URL.");
                     e.printStackTrace();
                     return null;
                 }
@@ -179,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(Movie[] result) {
             if (result == null) {
-                Log.w(this.getClass().toString(), "Movie array retrieved was empty after executing the AsyncTask.");
+                displayError("Movie array retrieved was empty after executing the AsyncTask.");
                 return;
             }
             displayRecycleView();

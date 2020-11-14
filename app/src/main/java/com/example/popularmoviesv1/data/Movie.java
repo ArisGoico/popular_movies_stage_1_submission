@@ -1,4 +1,4 @@
-package com.example.popularmoviesv1.Data;
+package com.example.popularmoviesv1.data;
 
 import android.net.Uri;
 

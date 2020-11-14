@@ -13,24 +13,17 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-    //Variables with the Movie information
-    private String title;
-    private String synopsis;
-    private String releaseDate;
-    private String score;
-    private Uri posterUri;
-
-    //UI Variables
-    private ImageView mPoster;
-    private TextView mTitle;
-    private TextView mSynopsis;
-    private TextView mReleaseDate;
-    private TextView mScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        String title = "";
+        String synopsis = "";
+        String releaseDate = "";
+        String score = "";
+        Uri posterUri = null;
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -50,19 +43,20 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         //DONE Display the appropriate information in each View
-        mPoster = (ImageView) findViewById(R.id.iv_detail_image);
+        //UI Variables
+        ImageView mPoster = (ImageView) findViewById(R.id.iv_detail_image);
         Picasso.get().load(posterUri).into(mPoster);
 
-        mTitle = (TextView) findViewById(R.id.tv_detail_title);
+        TextView mTitle = (TextView) findViewById(R.id.tv_detail_title);
         mTitle.setText(title);
 
-        mSynopsis = (TextView) findViewById(R.id.tv_detail_synopsis);
+        TextView mSynopsis = (TextView) findViewById(R.id.tv_detail_synopsis);
         mSynopsis.setText(synopsis);
 
-        mReleaseDate = (TextView) findViewById(R.id.tv_detail_release_date);
+        TextView mReleaseDate = (TextView) findViewById(R.id.tv_detail_release_date);
         mReleaseDate.setText(releaseDate);
 
-        mScore = (TextView) findViewById(R.id.tv_detail_score);
+        TextView mScore = (TextView) findViewById(R.id.tv_detail_score);
         mScore.setText(score);
     }
 }
