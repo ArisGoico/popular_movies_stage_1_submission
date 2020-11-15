@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +47,15 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get().load(posterUri).into(mPoster);
 
         TextView mTitle = (TextView) findViewById(R.id.tv_detail_title);
-        mTitle.setText(title);
+        mTitle.setText(R.string.detail_text_title + title);
 
         TextView mSynopsis = (TextView) findViewById(R.id.tv_detail_synopsis);
-        mSynopsis.setText(synopsis);
+        mSynopsis.setText(R.string.detail_text_synopsis + synopsis);
 
         TextView mReleaseDate = (TextView) findViewById(R.id.tv_detail_release_date);
-        mReleaseDate.setText(releaseDate);
+        mReleaseDate.setText(R.string.detail_text_release + releaseDate);
 
         TextView mScore = (TextView) findViewById(R.id.tv_detail_score);
-        mScore.setText(score);
+        mScore.setText(R.string.detail_text_score + score);
     }
 }

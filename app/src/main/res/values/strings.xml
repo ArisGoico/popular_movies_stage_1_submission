@@ -6,4 +6,8 @@
     <string name="main_menu_change_sorting_rated">Sort by rating</string>
 
     <string name="detail_image_description">This is the cover image of the movie.</string>
+    <string name="detail_text_title">Movie title: </string>
+    <string name="detail_text_synopsis">Synopsis: </string>
+    <string name="detail_text_release">Release date: </string>
+    <string name="detail_text_score">Average score: </string>
 </resources>

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean orderPopular = true;
 
     //Constants
-    private final int NUM_COLUMNS = 2;
+    private final int NUM_COLUMNS = 3;
 
     //MovieDB API calls URLs
     private final String SCHEMA = "https";
@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         displayLoading();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //Call method to launch the AsyncTask
         downloadMoviePostersPopular();

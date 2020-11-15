@@ -2,6 +2,7 @@ package com.example.popularmoviesv1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmoviesv1.data.Movie;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
@@ -63,7 +65,7 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //TODO maybe do some checks for valid position?
         Movie movie = mArrayMovies[position];
-        Picasso.get().load(movie.posterUri).into(holder.mPoster);
+        Picasso.get().load(movie.posterUri).placeholder(R.drawable.ic_launcher_foreground).into(holder.mPoster);
     }
 
     @NonNull
