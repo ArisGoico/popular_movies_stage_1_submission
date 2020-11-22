@@ -47,15 +47,15 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get().load(posterUri).into(mPoster);
 
         TextView mTitle = (TextView) findViewById(R.id.tv_detail_title);
-        mTitle.setText(R.string.detail_text_title + title);
+        mTitle.setText(title);
 
         TextView mSynopsis = (TextView) findViewById(R.id.tv_detail_synopsis);
-        mSynopsis.setText(R.string.detail_text_synopsis + synopsis);
+        mSynopsis.setText(synopsis);
 
         TextView mReleaseDate = (TextView) findViewById(R.id.tv_detail_release_date);
-        mReleaseDate.setText(R.string.detail_text_release + releaseDate);
+        mReleaseDate.setText(releaseDate);
 
         TextView mScore = (TextView) findViewById(R.id.tv_detail_score);
-        mScore.setText(R.string.detail_text_score + score);
+        mScore.setText(score);
     }
 }

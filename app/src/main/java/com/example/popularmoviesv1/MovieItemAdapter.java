@@ -39,11 +39,11 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
             Intent intent = new Intent(context, DetailActivity.class);
 
             //DONE Add the movie information and pass it as parameter of the intent
-            intent.putExtra("Title",mArrayMovies[position].title);
-            intent.putExtra("Synopsis",mArrayMovies[position].synopsis);
-            intent.putExtra("ReleaseDate",mArrayMovies[position].releaseDate);
-            intent.putExtra("Score",mArrayMovies[position].score);
-            intent.putExtra("PosterUri",mArrayMovies[position].posterUri.toString());
+            intent.putExtra("Title",mArrayMovies[position].getTitle());
+            intent.putExtra("Synopsis",mArrayMovies[position].getSynopsis());
+            intent.putExtra("ReleaseDate",mArrayMovies[position].getReleaseDate());
+            intent.putExtra("Score",mArrayMovies[position].getScore());
+            intent.putExtra("PosterUri",mArrayMovies[position].getPosterUri().toString());
 
             context.startActivity(intent);
         }
@@ -65,7 +65,7 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //TODO maybe do some checks for valid position?
         Movie movie = mArrayMovies[position];
-        Picasso.get().load(movie.posterUri).placeholder(R.drawable.ic_launcher_foreground).into(holder.mPoster);
+        Picasso.get().load(movie.getPosterUri()).placeholder(R.drawable.ic_launcher_foreground).into(holder.mPoster);
     }
 
     @NonNull

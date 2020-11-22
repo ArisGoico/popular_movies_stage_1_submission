@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         mPbLoading.setVisibility(View.VISIBLE);
     }
 
-    private void displayError(String text) {
+    public void displayError(String text) {
         mRecyclerView.setVisibility(View.INVISIBLE);
         mPbLoading.setVisibility(View.INVISIBLE);
         mTvErrorMessage.setVisibility(View.VISIBLE);
@@ -164,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     jsonString = JsonNetworkUtils.getResponseFromHttpUrl(objective);
                 }
                 catch (Exception e) {
-                    displayError("Unknown error while accessing the URL.");
+                    //displayError("Unknown error while accessing the URL.");
+                    Log.e(this.getClass().toString(), "Unknown error while accessing the URL.");
                     e.printStackTrace();
                     return null;
                 }
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Movie[] result) {
             if (result == null) {
                 displayError("Movie array retrieved was empty after executing the AsyncTask.");
+                Log.e(this.getClass().toString(), "Movie array retrieved was empty after executing the AsyncTask.");
                 return;
             }
             displayRecycleView();
